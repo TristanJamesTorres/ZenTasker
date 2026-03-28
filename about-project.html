@@ -3,36 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZenTasker - About</title>
+    <title>ZenTasker - About Project</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body>
-  <header class="header">
-    <div class="container">
-      <div class="header_wrapper">
-        <div class="header_left">
-          <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-            <i class="fa-solid fa-list-check"></i>
-            <h3>ZenTaskerr</h3>
-          </a>
+  <div class="app_container">
+    <header class="header">
+      <div class="container">
+        <div class="header_wrapper">
+          <div class="header_left">
+            <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
+              <i class="fa-solid fa-list-check"></i>
+              <h3>ZenTasker</h3>
+            </a>
+          </div>
+            <nav class="header_nav">
+              <a href="index.html">Home</a>
+              <a href="about-project.html" class="active">About</a>
+              <a href="developers.html">Developers</a>
+              <div class="theme_toggle">
+                <span>Dark Mode</span>
+                  <label class="switch">
+                    <input type="checkbox" id="theme_switch">
+                    <span class="slider round"></span>
+                  </label>
+              </div>
+            </nav>
         </div>
-          <nav class="header_nav">
-            <a href="index.html">Home</a>
-            <a href="about-project.html">About</a>
-            <a href="developers.html">Developers</a>
-            <div class="theme_toggle">
-              <span>Dark Mode</span>
-                <label class="switch">
-                  <input type="checkbox" id="theme_switch">
-                  <span class="slider round"></span>
-                </label>
-            </div>
-          </nav>
       </div>
-    </div>
-  </header>
+    </header>
+
+    <main class="main_content about_page">
+        <div class="container">
+            <section class="about_section animate_fade">
+                <div class="section_header">
+                    <i class="fas fa-circle-info"></i>
+                    <h1>About the Project</h1>
+                </div>
+                
+                <div class="about_card">
+                    <h2>Purpose of the System</h2>
+                    <p>
+                        <strong>ZenTasker</strong> is a web-based task management system designed to help users organize, track, and manage their daily tasks efficiently. As tasks continue to increase, especially among students and employees, traditional methods like notepads become ineffective, making ZenTasker a reliable digital solution.
+                        <br><br>
+                        The application allows users to create, view, edit, filter, and manage tasks within a well-organized and user-friendly interface. Tasks are categorized into views such as All Tasks, Today’s Tasks, and Important Tasks, helping users focus on urgent responsibilities.
+                        <br><br>
+                        By utilizing structured data handling and efficient task management logic, the system enhances productivity, reduces missed deadlines, and promotes better time management. Additionally, the system utilizes light and dark mode to enhance user experience by providing visual comfort.
+                    </p>
+                </div>
+
+                <div class="features_grid">
+                    <div class="about_card feature_item">
+                        <h3><i class="fas fa-tasks"></i> Task Management</h3>
+                        <ul>
+                            <li>Add tasks with title, description, date, and time</li>
+                            <li>Edit and delete existing tasks</li>
+                            <li>Mark tasks as completed</li>
+                            <li>Mark tasks as important</li>
+                        </ul>
+                    </div>
+
+                    <div class="about_card feature_item">
+                        <h3><i class="fas fa-filter"></i> Filtering & Sorting</h3>
+                        <ul>
+                            <li>Search by title or description</li>
+                            <li>Filter by Priority, Status, or Date</li>
+                            <li>Sort by Due Date, Creation Date, or Title</li>
+                            <li>Ascending or Descending order</li>
+                        </ul>
+                    </div>
+
+                    <div class="about_card feature_item">
+                        <h3><i class="fas fa-chart-pie"></i> Statistics & UI</h3>
+                        <ul>
+                            <li>Real-time dashboard (Total, Pending, Overdue)</li>
+                            <li>Dark Mode toggle for visual flexibility</li>
+                            <li>Expandable full-screen description editor</li>
+                            <li>Automatic priority assignment</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="about_card tech_section">
+                    <h2>Technologies Used</h2>
+                    <div class="tech_tags">
+                        <span class="tech_tag"><i class="fab fa-html5"></i> HTML5</span>
+                        <span class="tech_tag"><i class="fab fa-css3-alt"></i> CSS3</span>
+                        <span class="tech_tag"><i class="fab fa-js"></i> JavaScript</span>
+                        <span class="tech_tag"><i class="fas fa-font"></i> Poppins Font</span>
+                        <span class="tech_tag"><i class="fas fa-database"></i> LocalStorage</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+  </div>
 
   <script src="script.js"></script>
 </body>

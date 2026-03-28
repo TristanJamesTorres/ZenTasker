@@ -26,6 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
+    // --- NEW: PERSISTENT EXPANSION TRACKER ---
+    let expandedTaskId = null; 
+
     const saveAndRender = () => {
         localStorage.setItem('tasks', JSON.stringify(tasks));
         renderTasks();
@@ -118,6 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     default: viewTitle.innerText = "All Tasks";
                 }
             }
+            expandedTaskId = null; // Reset expansion when switching views
             renderTasks(); 
         });
     });
@@ -218,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         tasksList.classList.remove('is-empty');
         tasksList.innerHTML = filteredTasks.map((task) => `
-            <div class="task_card ${task.completed ? 'completed' : ''}" data-id="${task.id}" style="border-left: 5px solid ${getPriorityColor(task.priority)}">
+            <div class="task_card ${task.completed ? 'completed' : ''} ${expandedTaskId === task.id ? 'expanded' : ''}" data-id="${task.id}" style="border-left: 5px solid ${getPriorityColor(task.priority)}">
                 <button class="close_expanded"><i class="fas fa-arrow-left"></i> Back</button>
                 <div class="task_card_header">
                     <div class="title_section">
@@ -239,6 +243,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         `).join('');
+
+        // Apply list-level expanded class
+        if (expandedTaskId) {
+            tasksList.classList.add('has-expanded');
+        } else {
+            tasksList.classList.remove('has-expanded');
+        }
+
         updateStats();
     };
 
@@ -301,6 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
             saveAndRender();
         } else if (e.target.closest('.delete')) {
             if (confirm("Are you sure you want to delete this task?")) {
+                if (expandedTaskId === id) expandedTaskId = null; // Clear if deleted
                 tasks = tasks.filter(t => t.id !== id);
                 saveAndRender();
             }
@@ -320,12 +333,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = e.target.closest('.task_card');
             if (card && !e.target.closest('.task_actions')) {
                 if (e.target.closest('.close_expanded')) {
-                    card.classList.remove('expanded');
-                    tasksList.classList.remove('has-expanded');
+                    expandedTaskId = null; // Update persistent ID
                 } else {
-                    card.classList.add('expanded');
-                    tasksList.classList.add('has-expanded');
+                    expandedTaskId = id; // Update persistent ID
                 }
+                renderTasks(); // Re-render to apply logic
             }
         }
     });
