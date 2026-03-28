@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZenTasker - Home</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+  <div class="app_container">
+    <!-- HEADER -->
+    <header class="header">
+      <div class="container">
+        <div class="header_wrapper">
+          <div class="header_left">
+            <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
+              <i class="fa-solid fa-list-check"></i>
+              <h3>ZenTasker</h3>
+            </a>
+          </div>
+            <nav class="header_nav">
+              <a href="index.html">Home</a>
+              <a href="about-project.html">About</a>
+              <a href="developers.html">Developers</a>
+              <div class="theme_toggle">
+                <span>Dark Mode</span>
+                  <label class="switch">
+                    <input type="checkbox" id="theme_switch">
+                    <span class="slider round"></span>
+                  </label>
+              </div>
+            </nav>
+        </div>
+      </div>
+    </header>
+    <!-- MAIN CONTENT -->
+    <main class="main_content">
+      <div class="container">
+        <aside class="sidebar_wrapper">
+          <div class="sidebar_menu">
+            <button class="active" id="all-tasks"><i class="fas fa-list"></i> All Tasks</button>
+            <button id="today-tasks"><i class="fas fa-calendar-day"></i> Today</button>
+            <button id="important-tasks"><i class="fas fa-star"></i> Important</button>
+          </div>
+          <section class="stats">
+            <div class="stats_wrapper">
+              <h3>Statistics</h3>
+                <div class="stats_item">
+                  <span>Total Tasks</span>
+                  <span id="total-tasks-count">0</span>
+                </div>
+                <div class="stats_item">
+                  <span>Completed</span>
+                  <span id="completed-tasks-count">0</span>
+                </div>
+                <div class="stats_item">
+                  <span>Pending</span>
+                  <span id="pending-tasks-count">0</span>
+                </div>
+                <div class="stats_item">
+                  <span>Overdue</span>
+                  <span id="overdue-tasks-count">0</span>
+                </div>
+              </div>
+          </section>
+        </aside>
+        <div class="task_content">
+          <div class="task_header">
+            <h2 id="current_view">All Tasks</h2>
+            <div class="task_actions">
+              <div class="search_box">
+                <input type="text" id="task-search" placeholder="Search tasks...">
+                <i class="fas fa-search"></i>
+              </div>
+              <button id="add-task-btn"><i class="fas fa-plus"></i> Add Task</button>
+              <button id="sort-tasks-btn"><i class="fas fa-sort"></i> Sort</button>
+            </div>
+          </div>
+
+          <div class="task_filters">
+            <div class="filter_item">
+              <label for="priority_filter">Priority:</label>
+              <div class="select_wrapper">
+                <select id="priority_filter">
+                  <option value="all">All</option>
+                  <option value="high">High</option>
+                  <option value="medium">Medium</option>
+                  <option value="low">Low</option>
+                </select>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+            </div>
+
+            <div class="filter_item">
+              <label for="date_filter">Due Date:</label>
+              <div class="select_wrapper">
+                <select id="date_filter">
+                  <option value="all">All</option>
+                  <option value="today">Today</option>
+                  <option value="week">This Week</option>
+                  <option value="month">This Month</option>
+                </select>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+            </div>
+
+            <div class="filter_item">
+              <label for="status_filter">Status:</label>
+              <div class="select_wrapper">
+                <select id="status_filter">
+                  <option value="all">All</option>
+                  <option value="pending">Pending</option>
+                  <option value="completed">Completed</option>
+                  <option value="overdue">Overdue</option>
+                </select>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+            </div>
+          </div>
+
+        <div class="tasks_list" id="tasks_list">
+          <div class="empty_state">
+            <i class="fas fa-clipboard-list"></i>
+            <p>No tasks found. Add a new task to get started!</p>
+          </div>
+        </div>
+
+      </div>
+      </div>
+    </main>
+  </div>
+  <!-- MODAL -->
+  <div class="modal" id="task_modal">
+    <div class="modal_content">
+      <div id="duplicate-alert" class="duplicate-alert">
+        <i class="fas fa-exclamation-circle"></i>
+        <span id="duplicate-msg">This title is already used!</span>
+      </div>
+      <span class="close_btn">&times;</span>
+      <h2 id="modal-title">Add New Task</h2>
+        <form id="task-form">
+          <input type="hidden" id="task_id">
+            <div class="form_group">
+                <label for="task_title">Title*</label>
+                <input type="text" id="task_title" required>
+              </div>
+            <div class="form_row">
+                <div class="form_group">
+                    <label for="task_due_date">Due Date</label>
+                    <input type="date" id="task_due_date">
+                </div>
+                <div class="form_group">
+                    <label for="task_due_time">Due Time</label> 
+                    <input type="time" id="task_due_time"> </div>
+            </div>
+            <div class="form_group description_group">
+              <div class="label_row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+                  <label for="task_description">Description</label>
+                  <button type="button" id="expand_desc_btn" class="text_action_btn">
+                      <i class="fas fa-expand-alt"></i> Expand
+                  </button>
+              </div>
+              <textarea id="task_description" rows="4"></textarea>
+          </div>
+            <button type="submit" class="submit_btn">Save Task</button>
+        </form>
+    </div>
+  </div>
+ <div class="modal" id="sort_modal">
+    <div class="modal-content">
+        <span class="close_btn">&times;</span>
+        <h2>Sort Tasks</h2>
+        
+        <div class="sort_options" data-label="Sort By">
+            <div class="sort_option">
+                <input type="radio" id="sort_date" name="sort" value="dueDate" checked>
+                <label for="sort_date">Due Date</label>
+            </div>
+            <div class="sort_option">
+                <input type="radio" id="sort_created" name="sort" value="createdAt">
+                <label for="sort_created">Creation Date</label>
+            </div>
+            <div class="sort_option">
+                <input type="radio" id="sort_title" name="sort" value="title">
+                <label for="sort_title">Title</label>
+            </div>
+        </div>
+
+        <div class="sort_order" data-label="Direction">
+            <div class="sort_option">
+                <input type="radio" id="order_asc" name="order" value="asc">
+                <label for="order_asc">Ascending</label>
+            </div>
+            <div class="sort_option">
+                <input type="radio" id="order-desc" name="order" value="desc" checked>
+                <label for="order_desc">Descending</label>
+            </div>
+        </div>
+        
+        <button id="apply-sort-btn" class="submit_btn">Apply Sort</button>
+    </div>
+</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
