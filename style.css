@@ -19,6 +19,10 @@
     --sidebar-text: #333;
     --input-bg: #fff;
     --poppins: "Poppins", sans-serif;
+    
+    /* Predefined Consistent Shadows */
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --card-shadow-hover: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 [data-theme="dark"] {
     --primary-color: #3f48cc;
@@ -39,6 +43,10 @@
     --sidebar-text: #f8f9fa;
     --input-bg: #3d3d3d;
     --poppins: "Poppins", sans-serif;
+    
+    /* Dark Mode Shadows */
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    --card-shadow-hover: 0 10px 20px rgba(0, 0, 0, 0.4);
 }
 
 *{
@@ -341,18 +349,21 @@ input:checked + .slider:before { transform: translateX(18px); }
     transition: all 0.3s ease;
     border: none;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(63, 72, 204, 0.2);
+    box-shadow: var(--card-shadow);
 }
-#add-task-btn, #sort-tasks-btn:hover {
+#add-task-btn:hover, 
+#sort-tasks-btn:hover {
     background-color: #353ca6;
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(63, 72, 204, 0.3);
+    box-shadow: var(--card-shadow-hover);
 }
-#add-task-btn, #sort-tasks-btn:active {
+#add-task-btn:active,
+#sort-tasks-btn:active {
     transform: translateY(0);
     box-shadow: 0 2px 4px rgba(63, 72, 204, 0.2);
 }
-#add-task-btn, #sort-tasks-btn i {
+#add-task-btn i,
+#sort-tasks-btn i {
     font-size: 1.5rem;
 }
 .task_filters {
@@ -436,7 +447,7 @@ input:checked + .slider:before { transform: translateX(18px); }
     width: 95%;
     max-width: 515px;
     padding: 3rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--card-shadow-hover);
     position: relative;
     animation: modalSlideIn 0.3s ease-out;
     color: var(--text-color);
@@ -510,7 +521,7 @@ input:checked + .slider:before { transform: translateX(18px); }
     width: 100%;
     z-index: 2100;
     border: 2px solid var(--danger-color);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--card-shadow-hover);
     font-size: 1.4rem;
     font-weight: 600;
     animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -719,13 +730,13 @@ input:checked + .slider:before { transform: translateX(18px); }
     height: 20rem;
     display: flex;
     flex-direction: column; /* Stacks elements vertically */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: var(--card-shadow);
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     cursor: pointer; /* Ipinapahiwatig na pwedeng i-click/expand */
 }
 .task_card:hover {
     transform: translateY(-5px); /* Aangat ng 5px */
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Mas madilim na anino */
+    box-shadow: var(--card-shadow-hover); /* Mas madilim na anino */
     border-color: var(--primary-color); /* Magpapalit ng kulay ang border */
 }
 
@@ -959,6 +970,20 @@ input:checked + .slider:before { transform: translateX(18px); }
     backdrop-filter: blur(4px);
 }
 
+#sort_modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
 #sort_modal.active {
     display: flex;
     animation: modalSlideIn 0.3s ease-out;
@@ -971,7 +996,7 @@ input:checked + .slider:before { transform: translateX(18px); }
     width: 100%;
     max-width: 450px; /* Matching Task Modal width */
     position: relative;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    box-shadow: var(--card-shadow-hover);
     transform: scale(0.9);
     transition: transform 0.3s ease;
 }
@@ -1054,7 +1079,7 @@ input:checked + .slider:before { transform: translateX(18px); }
     background: var(--card-bg);
     padding: 2.5rem;
     border-radius: 1.5rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    box-shadow: var(--card-shadow);
     margin-bottom: 2rem;
     border: 1px solid var(--border-color);
     width: 100%; /* Ensures card fills the container */
@@ -1062,7 +1087,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 .about_card h2 {
     color: var(--primary-color);
     font-size: 2rem;
-    margin: 0; /* Remove default margins to let Grid gap handle spacing */
+   
 }
 .about_card p {
     color: var(--text-color);
@@ -1079,7 +1104,7 @@ input:checked + .slider:before { transform: translateX(18px); }
     color: var(--primary-color);
     margin-bottom: 2rem;
 }
-.section_header i {
+.section_header i, h1 {
     font-size: 3rem;
 }
 /* Features Grid */
@@ -1167,118 +1192,158 @@ input:checked + .slider:before { transform: translateX(18px); }
     display: flex;
     justify-content: center;
 }
-
-
-.main_content.developers_page {
-}
-
-.design_header {
+.dev_header {
     display: flex;
     align-items: center;
     gap: 1.5rem;
     color: var(--primary-color);
     margin-bottom: 2rem;
 }
-.design_header h2 {
+.dev_header i,h2 {
     font-size: 3rem;
 }
 
-.design_header p {
-    font-size: 1.5rem;
-    font-style: italic;
-}
-
-/* Grid Layout */
-.design_grid {
+/* 2. Grid Layout */
+.dev_grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 4 Columns */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
     gap: 2rem;
 }
 
-/* Card Styling */
-.design_card {
-    background: var(--card-bg); /* Use theme card bg for dark/light integration */
+.dev_card {
+    background: var(--card-bg);
     border-radius: 1.5rem;
-    padding: 2rem;
-    height: 650px;
-    text-align: center;
+    padding: 2.5rem 2rem;
+    height: 650px; /* Increased slightly to accommodate 1.5rem text if needed */
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
 }
 
-.design_card:hover {
-    transform: translateY(-5px);
+.dev_card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow-hover);
 }
 
-/* Image styling - matches the gray background circle and inset border */
-.design_img_container {
-    width: 15rem;
+/* 4. Image Container */
+.dev_img_container {
+    width: 12rem; /* Scaled slightly for better proportions */
+    height: 12rem;
     border-radius: 50%;
-    background-color: var(--light-gray-color); /* Light gray behind image */
+    background-color: var(--light-gray-color);
     overflow: hidden;
-    margin-bottom: 2.5rem;
-    border: 3px solid var(--border-color); /* Subtle border like the image */
-   
+    margin-bottom: 2rem;
+    border: 3px solid var(--primary-color);
+    flex-shrink: 0;
 }
-.design_img {
+
+.dev_img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 50%;
 }
 
-/* Text elements */
-.design_info h3 {
+/* 5. Info Section */
+.dev_info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%; /* Allows socials to push to bottom */
+}
+
+.dev_info h3 {
     font-size: 1.8rem;
+    text-align: center;
     text-transform: uppercase;
     color: var(--text-color);
-    margin-bottom: 0.5rem;
-    font-weight: 600;
+    font-weight: 700;
 }
 
-.design_position {
-    font-size: 1.3rem;
-    color: var(--primary-color); /* Accent color for position */
-    text-transform: lowercase;
+/* 6. The Snug Position Badge */
+.dev_position {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 2rem auto; /* Centers the snug box */
+    padding: 0.5rem 0.8rem;
+    border-radius: 2rem;
+    background-color: color-mix(in srgb, var(--primary-color), transparent 85%); 
+    color: var(--primary-color); 
+    font-size: 1rem; /* Badge text should be smaller than body text */
     font-weight: 500;
-    margin-bottom: 2rem;
 }
 
-.design_description {
-    font-size: 1.3rem;
-    color: var(--secondary-color);
+.dev_contribution{
+    display: flex;
+    flex-direction: column; /* Stacks elements vertically */
+    gap: 2rem;
+}
+/* 7. Description & Justification */
+.dev_description {
+    font-size: 1.3rem; /* 1.5rem is very large for body text; 1rem is standard */
+    text-align: justify;
+    text-justify: inter-word; /* Fixes those "awkward spaces" */
+    hyphens: auto;
     line-height: 1.6;
-    font-style: italic;
-    margin-bottom: 2.5rem;
-    flex-grow: 1; /* Pushes socials to bottom if description lengths vary */
+    color: var(--text-color);
 }
 
-/* Socials section matching image */
-.design_socials {
+.dev_title {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--text-color);
+}
+/* 8. List Items */
+.dev_info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.dev_info li {
+    font-size: 1.3rem;
+    color: var(--text-color);
+    position: relative;
+    padding-left: 25px;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.dev_info li::before {
+    content: "▹"; 
+    position: absolute;
+    left: 0;
+    
+    /* 1. Increase Size */
+    font-size: 1.8rem; /* Adjusted to be larger than your 1.3rem text */
+    
+    /* 2. Alignment Fix */
+    /* Adjust 'top' slightly to center it vertically with the first line of text */
+    top: -5px; 
+    
+    color: var(--text-color);
+    font-weight: 900; /* Extra bold for better visibility */
+    
+    /* 3. Spacing */
+    /* If the icon overlaps the text, increase padding-left on the 'li' itself */
+}
+
+/* 9. Social Media Icons */
+.dev_socials {
     display: flex;
     gap: 1.5rem;
     justify-content: center;
-    margin-top: auto;
+    
 }
 
-.design_socials a {
+.dev_socials a {
     font-size: 1.8rem;
     color: var(--primary-color);
-    transition: color 0.3s ease;
+    transition: transform 0.3s ease, color 0.3s ease;
 }
 
-.design_socials a:hover {
+.dev_socials a:hover {
     color: var(--primary-hover);
-}
-
-/* Responsiveness */
-@media (max-width: 1200px) {
-    .design_grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 600px) {
-    .design_grid { grid-template-columns: 1fr; }
-    .design_header h2 { font-size: 3.5rem; }
+    transform: scale(1.2);
 }
