@@ -1134,6 +1134,7 @@ input:checked + .slider:before { transform: translateX(18px); }
     margin: 0 auto;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 .dev_header {
     display: flex;
