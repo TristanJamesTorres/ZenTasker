@@ -554,7 +554,7 @@ input:checked + .slider:before { transform: translateX(18px); }
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 #task_description {
-    resize: none; /* Removes manual drag handle */
+    resize: none;
     width: 100%;
     height: 120px;
     padding: 1rem;
@@ -729,18 +729,16 @@ input:checked + .slider:before { transform: translateX(18px); }
     padding: 2rem;
     height: 20rem;
     display: flex;
-    flex-direction: column; /* Stacks elements vertically */
+    flex-direction: column;
     box-shadow: var(--card-shadow);
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    cursor: pointer; /* Ipinapahiwatig na pwedeng i-click/expand */
+    cursor: pointer;
 }
 .task_card:hover {
-    transform: translateY(-5px); /* Aangat ng 5px */
-    box-shadow: var(--card-shadow-hover); /* Mas madilim na anino */
-    border-color: var(--primary-color); /* Magpapalit ng kulay ang border */
+    transform: translateY(-5px);
+    box-shadow: var(--card-shadow-hover);
+    border-color: var(--primary-color);
 }
-
-/* Siguraduhin na walang hover effect kapag expanded na ang card */
 .task_card.expanded:hover {
     transform: none;
     box-shadow: none;
@@ -761,13 +759,11 @@ input:checked + .slider:before { transform: translateX(18px); }
     align-items: center;
     gap: 1rem;
 }
-/* Style the checkbox */
 .task_checkbox {
     width: 1.5rem;
     cursor: pointer;
     accent-color: var(--success-color);
 }
-/* Style for completed tasks */
 .task_card.completed {
     opacity: 0.5;
 }
@@ -777,8 +773,6 @@ input:checked + .slider:before { transform: translateX(18px); }
     text-decoration: line-through;
     color: var(--secondary-color);
 }
-
-/* Ensure header icons don't shrink */
 .task_card_header {
     display: flex;
     justify-content: space-between;
@@ -786,14 +780,11 @@ input:checked + .slider:before { transform: translateX(18px); }
     width: 100%;
     margin-bottom: 1rem;
 }
-/* --- IMPROVED TASK ACTIONS --- */
 .task_actions {
     display: flex;
     gap: 1rem;
     align-items: center;
 }
-
-/* Reset button styles for task actions */
 .task-action-btn {
     padding: 0.5rem;
     cursor: pointer;
@@ -802,31 +793,27 @@ input:checked + .slider:before { transform: translateX(18px); }
     display: flex;
     align-items: center;
     justify-content: center;
-    background: none; /* Removed purple background */
-    border: none;     /* Removed border */
-    box-shadow: none; /* Removed shadow */
+    background: none;
+    border: none;
+    box-shadow: none;
     cursor: pointer;
     transition: all 0.3s ease;
-    border-radius: 50%; /* Makes the hover effect a nice circle */
+    border-radius: 50%;
 }
 .task-action-btn:hover {
-   background-color: var(--light-gray-color); /* Subtle hint on hover */
-    transform: scale(1.1); /* Slight pop instead of moving up */
+   background-color: var(--light-gray-color);
+    transform: scale(1.1);
     box-shadow: none;
 }
-/* Specific Action Colors */
 .task-action-btn.important.active {
     color: var(--warning-color);
 }
-
 .task-action-btn.important:hover {
     color: var(--warning-color);
 }
-
 .task-action-btn.edit:hover {
     color: var(--primary-color);
 }
-
 .task-action-btn.delete:hover {
     color: var(--danger-color);
 }
@@ -854,9 +841,8 @@ input:checked + .slider:before { transform: translateX(18px); }
     align-items: center;
     gap: 1.5rem;
     padding-top: 1.5rem;
-    margin-top: auto; /* Ensures it stays at the bottom of the card */
+    margin-top: auto;
 }
-
 .task_detail span {
     display: flex;
     align-items: center;
@@ -866,11 +852,9 @@ input:checked + .slider:before { transform: translateX(18px); }
 }
 .task_card.expanded {
     position: absolute;
-    /* Binago mula 0 patungong 2rem para magkaroon ng space sa header line */
     top: 2rem; 
     left: 0;
     width: 100%;
-    /* Binawasan ang height ng 2rem para hindi lumampas sa baba dahil sa offset sa taas */
     height: calc(100% - 2rem); 
     z-index: 100;
     margin: 0;
@@ -878,22 +862,18 @@ input:checked + .slider:before { transform: translateX(18px); }
     animation: expandAnimation 0.3s ease-out forwards;
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Pantay sa kaliwa lahat ng items */
-    padding: 3rem; /* Dagdag space sa loob ng expanded view */
+    align-items: flex-start;
+    padding: 3rem;
 }
 @keyframes expandAnimation {
     from { transform: scale(0.95); opacity: 0.8; }
     to { transform: scale(1); opacity: 1; }
 }
-
-/* Hide other cards when one is expanded */
 .tasks_list.has-expanded .task_card:not(.expanded) {
     display: none;
 }
-
-/* Add a close button specifically for expanded view */
 .close_expanded {
-    display: none; /* Hidden default */
+    display: none;
     border: none;
     background-color: transparent;
     color: var(--text-color);
@@ -901,32 +881,28 @@ input:checked + .slider:before { transform: translateX(18px); }
     font-weight: 500;
     font-family: var(--poppins);
     font-size: 1.4rem;
-    margin-bottom: 1.5rem; /* Space sa pagitan ng button at title */
+    margin-bottom: 1.5rem;
     transition: all 0.3s ease;
-    align-self: flex-start; /* Siguradong nasa kaliwa */
+    align-self: flex-start;
 }
 .close_expanded:hover {
     transform: translateX(-5px);
 }
-
 .close_expanded i {
     font-size: 1.2rem;
     transition: transform 0.3s ease;
 }
-
 .close_expanded:hover i {
-    transform: translateX(-3px); /* Arrow movement */
+    transform: translateX(-3px);
 }
 .task_card.expanded .close_expanded {
-   display: flex; /* Lalabas lang kapag expanded */
+   display: flex;
     align-items: center;
     gap: 1rem;
 }
-
-/* --- PRIORITY BADGE STYLE (Matches Image) --- */
 .priority_badge {
     padding: 0.4rem 1.2rem;
-    border-radius: 0.8rem; /* Rounded corners like the image */
+    border-radius: 0.8rem;
     font-size: 1.2rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -934,26 +910,23 @@ input:checked + .slider:before { transform: translateX(18px); }
     display: inline-block;
 }
 
-/* Light background colors for the badges */
 .priority_badge.high {
-    background-color: rgba(231, 74, 59, 0.1); /* Light red */
+    background-color: rgba(231, 74, 59, 0.1);
     color: #e74a3b;
 }
 
 .priority_badge.medium {
-    background-color: rgba(255, 193, 0, 0.1); /* Light yellow */
+    background-color: rgba(255, 193, 0, 0.1);
     color: #ffc100;
 }
 
 .priority_badge.low {
-    background-color: rgba(28, 200, 138, 0.1); /* Light green */
+    background-color: rgba(28, 200, 138, 0.1);
     color: #1cc88a;
 }
-
-/* Mobile Responsiveness */
 @media (max-width: 768px) {
     .tasks_list {
-        grid-template-columns: 1fr; /* Stacks to 1 column on small screens */
+        grid-template-columns: 1fr;
     }
 }
 #sort_modal {
@@ -963,13 +936,12 @@ input:checked + .slider:before { transform: translateX(18px); }
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    display: none; /* Hidden by default */
+    display: none;
     justify-content: center;
     align-items: center;
     z-index: 1000;
     backdrop-filter: blur(4px);
 }
-
 #sort_modal {
     position: fixed;
     top: 0;
@@ -977,35 +949,31 @@ input:checked + .slider:before { transform: translateX(18px); }
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    display: none; /* Hidden by default */
+    display: none;
     justify-content: center;
     align-items: center;
     z-index: 1000;
     backdrop-filter: blur(4px);
 }
-
 #sort_modal.active {
     display: flex;
     animation: modalSlideIn 0.3s ease-out;
 }
-
 #sort_modal .modal-content {
     background-color: var(--card-bg);
     padding: 3rem;
     border-radius: 1.5rem;
     width: 100%;
-    max-width: 450px; /* Matching Task Modal width */
+    max-width: 450px;
     position: relative;
     box-shadow: var(--card-shadow-hover);
     transform: scale(0.9);
     transition: transform 0.3s ease;
 }
-
 #sort_modal.active .modal-content {
     transform: scale(1);
     animation: zoomIn 0.3s ease forwards;
 }
-/* Internal Sort Groups */
 .sort_options, .sort_order {
     margin: 2rem 0;
     padding: 1.5rem;
@@ -1013,7 +981,6 @@ input:checked + .slider:before { transform: translateX(18px); }
     border-radius: 1rem;
     border: 1px solid var(--border-color);
 }
-
 .sort_option {
     display: flex;
     align-items: center;
@@ -1022,22 +989,18 @@ input:checked + .slider:before { transform: translateX(18px); }
     cursor: pointer;
     font-family: var(--poppins);
 }
-
 .sort_option input[type="radio"] {
     width: 1.8rem;
     height: 1.8rem;
     accent-color: var(--primary-color);
     cursor: pointer;
 }
-
 .sort_option label {
     cursor: pointer;
     font-size: 1.4rem;
     font-weight: 500;
     color: var(--text-color);
 }
-
-/* Section Labels */
 .sort_options::before, .sort_order::before {
     content: attr(data-label);
     display: block;
@@ -1048,13 +1011,11 @@ input:checked + .slider:before { transform: translateX(18px); }
     text-transform: uppercase;
     letter-spacing: 1px;
 }
-
-/* --- ABOUT PAGE STYLING --- */
 .about_page {
     padding: 2rem;
     display: flex;
-    justify-content: center; /* Centers horizontally (X-axis) */
-    min-height: calc(100vh - 80px); /* Adjusts for header height */
+    justify-content: center;
+    min-height: calc(100vh - 80px);
 }
 .about_page .container {
     width: 100%;
@@ -1063,36 +1024,31 @@ input:checked + .slider:before { transform: translateX(18px); }
     display: flex;
     justify-content: center;
 }
-
-/* Ensure the about_section takes up the full container width but stays centered */
 .about_section {
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
-
-/* --- UPDATED ABOUT CARD (GRID SPACING) --- */
 .about_card {
     display: grid;
-    gap: 2rem; /* Evenly spaces items without margin-bottom */
+    gap: 2rem;
     background: var(--card-bg);
     padding: 2.5rem;
     border-radius: 1.5rem;
     box-shadow: var(--card-shadow);
     margin-bottom: 2rem;
     border: 1px solid var(--border-color);
-    width: 100%; /* Ensures card fills the container */
+    width: 100%;
 }
 .about_card h2 {
     color: var(--primary-color);
     font-size: 2rem;
-   
 }
 .about_card p {
     color: var(--text-color);
     font-size: 1.5rem;
-    margin: 0; /* Remove default margins to let Grid gap handle spacing */
+    margin: 0;
 }
 .animate_fade {
     animation: fadeIn 0.8s ease-out;
@@ -1107,13 +1063,11 @@ input:checked + .slider:before { transform: translateX(18px); }
 .section_header i, h1 {
     font-size: 3rem;
 }
-/* Features Grid */
 .features_grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
 }
-
 .feature_item h3 {
     display: flex;
     align-items: center;
@@ -1121,7 +1075,6 @@ input:checked + .slider:before { transform: translateX(18px); }
     color: var(--primary-color);
     font-size: 2rem;
 }
-
 .feature_item ul {
     list-style: none;
 }
@@ -1132,7 +1085,6 @@ input:checked + .slider:before { transform: translateX(18px); }
     font-size: 1.5rem;
     color: var(--text-color);
 }
-
 .feature_item ul li::before {
     content: "\f00c";
     font-family: "Font Awesome 6 Free";
@@ -1141,8 +1093,6 @@ input:checked + .slider:before { transform: translateX(18px); }
     left: 0;
     color: var(--success-color);
 }
-
-/* Tech Tags */
 .tech_section h2 {
     color: var(--primary-color);
     font-size: 2rem;
@@ -1152,7 +1102,6 @@ input:checked + .slider:before { transform: translateX(18px); }
     flex-wrap: wrap;
     gap: 1rem;
 }
-
 .tech_tag {
     background: var(--light-color);
     padding: 0.8rem 1.5rem;
@@ -1169,22 +1118,16 @@ input:checked + .slider:before { transform: translateX(18px); }
 [data-theme="dark"] .tech_tag {
     background: #252438;
 }
-
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
-
-/* --- DEVELOPERS GRID STYLING --- */
-
-
 .developers_page {
     padding: 2rem;
     display: flex;
-    justify-content: center; /* Centers horizontally (X-axis) */
-    min-height: calc(100vh - 80px); /* Adjusts for header height */
+    justify-content: center;
+    min-height: calc(100vh - 80px);
 }
-
 .developers_page .container {
     width: 100%;
     max-width: 140rem;
@@ -1202,19 +1145,16 @@ input:checked + .slider:before { transform: translateX(18px); }
 .dev_header i,h2 {
     font-size: 3rem;
 }
-
-/* 2. Grid Layout */
 .dev_grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
 }
-
 .dev_card {
     background: var(--card-bg);
     border-radius: 1.5rem;
     padding: 2.5rem 2rem;
-    height: 650px; /* Increased slightly to accommodate 1.5rem text if needed */
+    height: 650px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1222,15 +1162,12 @@ input:checked + .slider:before { transform: translateX(18px); }
     border: 1px solid var(--border-color);
     box-shadow: var(--card-shadow);
 }
-
 .dev_card:hover {
     transform: translateY(-2px);
     box-shadow: var(--card-shadow-hover);
 }
-
-/* 4. Image Container */
 .dev_img_container {
-    width: 12rem; /* Scaled slightly for better proportions */
+    width: 12rem;
     height: 12rem;
     border-radius: 50%;
     background-color: var(--light-gray-color);
@@ -1239,21 +1176,17 @@ input:checked + .slider:before { transform: translateX(18px); }
     border: 3px solid var(--primary-color);
     flex-shrink: 0;
 }
-
 .dev_img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-
-/* 5. Info Section */
 .dev_info {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100%; /* Allows socials to push to bottom */
+    height: 100%;
 }
-
 .dev_info h3 {
     font-size: 1.8rem;
     text-align: center;
@@ -1261,46 +1194,39 @@ input:checked + .slider:before { transform: translateX(18px); }
     color: var(--text-color);
     font-weight: 700;
 }
-
-/* 6. The Snug Position Badge */
 .dev_position {
     display: block;
     width: fit-content;
-    margin: 0 auto 2rem auto; /* Centers the snug box */
+    margin: 0 auto 2rem auto;
     padding: 0.5rem 0.8rem;
     border-radius: 2rem;
     background-color: color-mix(in srgb, var(--primary-color), transparent 85%); 
     color: var(--primary-color); 
-    font-size: 1rem; /* Badge text should be smaller than body text */
+    font-size: 1rem;
     font-weight: 500;
 }
-
 .dev_contribution{
     display: flex;
-    flex-direction: column; /* Stacks elements vertically */
+    flex-direction: column;
     gap: 2rem;
 }
-/* 7. Description & Justification */
 .dev_description {
-    font-size: 1.3rem; /* 1.5rem is very large for body text; 1rem is standard */
+    font-size: 1.3rem;
     text-align: justify;
-    text-justify: inter-word; /* Fixes those "awkward spaces" */
+    text-justify: inter-word;
     hyphens: auto;
     line-height: 1.6;
     color: var(--text-color);
 }
-
 .dev_title {
     font-weight: 700;
     font-size: 1.3rem;
     color: var(--text-color);
 }
-/* 8. List Items */
 .dev_info ul {
     list-style: none;
     padding: 0;
 }
-
 .dev_info li {
     font-size: 1.3rem;
     color: var(--text-color);
@@ -1309,40 +1235,26 @@ input:checked + .slider:before { transform: translateX(18px); }
     text-align: justify;
     text-justify: inter-word;
 }
-
 .dev_info li::before {
     content: "▹"; 
     position: absolute;
     left: 0;
-    
-    /* 1. Increase Size */
-    font-size: 1.8rem; /* Adjusted to be larger than your 1.3rem text */
-    
-    /* 2. Alignment Fix */
-    /* Adjust 'top' slightly to center it vertically with the first line of text */
+    font-size: 1.8rem;
     top: -5px; 
-    
     color: var(--text-color);
-    font-weight: 900; /* Extra bold for better visibility */
-    
-    /* 3. Spacing */
-    /* If the icon overlaps the text, increase padding-left on the 'li' itself */
+    font-weight: 900;
 }
-
-/* 9. Social Media Icons */
 .dev_socials {
     display: flex;
     gap: 1.5rem;
     justify-content: center;
     
 }
-
 .dev_socials a {
     font-size: 1.8rem;
     color: var(--primary-color);
     transition: transform 0.3s ease, color 0.3s ease;
 }
-
 .dev_socials a:hover {
     color: var(--primary-hover);
     transform: scale(1.2);
