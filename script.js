@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskForm = document.getElementById('task-form');
     const tasksList = document.getElementById('tasks_list');
     const modalTitle = document.getElementById('modal-title');
-    const duplicateAlert = document.getElementById('duplicate-alert'); 
+    const duplicateAlert = document.getElementById('duplicate-alert');
     
     const expandDescBtn = document.getElementById('expand_desc_btn'); 
     const taskDescription = document.getElementById('task_description');
@@ -19,21 +19,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const statusFilter = document.getElementById('status_filter');
     const searchInput = document.getElementById('task-search');
 
-    // --- NEW: SORTING ELEMENTS ---
+    // --- SORTING ELEMENTS ---
     const sortModal = document.getElementById('sort_modal');
     const applySortBtn = document.getElementById('apply-sort-btn');
     const sortTriggerBtn = document.getElementById('sort-tasks-btn');
 
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-    // --- NEW: PERSISTENT EXPANSION TRACKER ---
+    // --- PERSISTENT EXPANSION TRACKER ---
     let expandedTaskId = null; 
 
+    /**
+     * SAVE AND RENDER FUNCTION
+     */
     const saveAndRender = () => {
         localStorage.setItem('tasks', JSON.stringify(tasks));
         renderTasks();
     };
 
+    /**
+     * APPLY THEME FUNCTION
+     */
     const applyTheme = (theme) => {
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
@@ -50,7 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- NEW: SORTING LOGIC FUNCTION ---
+    /**
+     * GET SORTED TASKS FUNCTION
+     */
     const getSortedTasks = (tasksToSort) => {
         const criteria = document.querySelector('input[name="sort"]:checked').value;
         const order = document.querySelector('input[name="order"]:checked').value;
@@ -59,12 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
             let valA = a[criteria];
             let valB = b[criteria];
 
-            // Handle Date Comparison (Due Date or Creation Date)
             if (criteria === 'dueDate' || criteria === 'createdAt') {
                 valA = new Date(valA || 0).getTime();
                 valB = new Date(valB || 0).getTime();
             } else {
-                // Handle Text Comparison (Title)
                 valA = valA ? valA.toString().toLowerCase() : '';
                 valB = valB ? valB.toString().toLowerCase() : '';
             }
@@ -75,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // --- NEW: SORT EVENT LISTENERS ---
+    // --- SORT EVENT LISTENERS ---
     if (sortTriggerBtn) {
         sortTriggerBtn.addEventListener('click', () => {
             sortModal.classList.add('active');
@@ -83,10 +89,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     applySortBtn.addEventListener('click', () => {
-        // We sort the global tasks array and then re-render
         tasks = getSortedTasks(tasks);
         sortModal.classList.remove('active');
-        saveAndRender(); // Saves the sorted order to localStorage and refreshes list
+        saveAndRender(); 
     });
 
     // --- Description Fullscreen Toggle ---
@@ -121,11 +126,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     default: viewTitle.innerText = "All Tasks";
                 }
             }
-            expandedTaskId = null; // Reset expansion when switching views
+            expandedTaskId = null; 
             renderTasks(); 
         });
     });
 
+    /**
+     * TOGGLE MODAL FUNCTION
+     */
     const toggleModal = (show = true) => {
         if (show) {
             taskModal.classList.add('active');
@@ -152,6 +160,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target === taskModal || e.target === sortModal) toggleModal(false);
     });
 
+    /**
+     * FORMAT DATE FUNCTION
+     */
     const formatDate = (dateStr) => {
         if (!dateStr) return 'No date';
         const [year, month, day] = dateStr.split('-');
@@ -161,6 +172,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    /**
+     * FORMAT TIME FUNCTION
+     */
     const formatTime = (timeStr) => {
         if (!timeStr) return 'No time'; 
         const [hours, minutes] = timeStr.split(':');
@@ -170,6 +184,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return `${h}:${minutes} ${ampm}`;
     };
 
+    /**
+     * CALCULATE PRIORITY FUNCTION
+     */
     const calculatePriority = (dueDateStr) => {
         if (!dueDateStr) return 'low';
         const today = new Date().setHours(0, 0, 0, 0);
@@ -180,17 +197,41 @@ document.addEventListener('DOMContentLoaded', () => {
         return 'low';
     };
 
+    /**
+     * NEW: UPDATE ALL PRIORITIES ON LOAD
+     * Runs through existing tasks and resets their priority based on the current date.
+     */
+    const refreshAllPriorities = () => {
+        let changed = false;
+        tasks = tasks.map(task => {
+            const newPriority = calculatePriority(task.dueDate);
+            if (task.priority !== newPriority) {
+                changed = true;
+                return { ...task, priority: newPriority };
+            }
+            return task;
+        });
+        if (changed) localStorage.setItem('tasks', JSON.stringify(tasks));
+    };
+
+    /**
+     * GET PRIORITY COLOR FUNCTION
+     */
     const getPriorityColor = (priority) => {
         const colors = { high: '#e74a3b', medium: '#ffc100', low: '#1cc88a' };
         return colors[priority] || '#858796';
     };
 
+    /**
+     * RENDER TASKS FUNCTION
+     */
     const renderTasks = () => {
         if (!tasksList) return;
         const activeSidebarFilter = document.querySelector('.sidebar_menu button.active')?.id || 'all-tasks';
         const searchTerm = searchInput.value.toLowerCase();
         let filteredTasks = [...tasks];
 
+        // 1. Sidebar Category Filters
         if (activeSidebarFilter === 'important-tasks') {
             filteredTasks = filteredTasks.filter(t => t.isImportant);
         } else if (activeSidebarFilter === 'today-tasks') {
@@ -198,14 +239,58 @@ document.addEventListener('DOMContentLoaded', () => {
             filteredTasks = filteredTasks.filter(t => t.dueDate === todayStr);
         }
 
-        if (priorityFilter.value !== 'all') filteredTasks = filteredTasks.filter(t => t.priority === priorityFilter.value);
-        if (statusFilter.value !== 'all') {
-            const today = new Date().setHours(0, 0, 0, 0);
-            if (statusFilter.value === 'completed') filteredTasks = filteredTasks.filter(t => t.completed);
-            else if (statusFilter.value === 'pending') filteredTasks = filteredTasks.filter(t => !t.completed);
-            else if (statusFilter.value === 'overdue') filteredTasks = filteredTasks.filter(t => !t.completed && new Date(t.dueDate) < today);
+        // 2. Priority Filter
+        if (priorityFilter.value !== 'all') {
+            filteredTasks = filteredTasks.filter(t => t.priority === priorityFilter.value);
         }
 
+        // 3. Status/Overdue Filter
+        const todayNormalized = new Date();
+        todayNormalized.setHours(0, 0, 0, 0);
+
+        if (statusFilter.value !== 'all') {
+            if (statusFilter.value === 'completed') {
+                filteredTasks = filteredTasks.filter(t => t.completed);
+            } else if (statusFilter.value === 'pending') {
+                filteredTasks = filteredTasks.filter(t => !t.completed);
+            } else if (statusFilter.value === 'overdue') {
+                filteredTasks = filteredTasks.filter(t => !t.completed && new Date(t.dueDate) < todayNormalized);
+            }
+        }
+
+        // 4. DUE DATE FILTER (Today, Week, Month)
+        if (dateFilter.value !== 'all') {
+            filteredTasks = filteredTasks.filter(t => {
+                if (!t.dueDate) return false;
+                
+                const taskDate = new Date(t.dueDate);
+                taskDate.setHours(0, 0, 0, 0);
+                
+                const now = new Date();
+                now.setHours(0, 0, 0, 0);
+
+                if (dateFilter.value === 'today') {
+                    return taskDate.getTime() === now.getTime();
+                }
+
+                if (dateFilter.value === 'week') {
+                    const startOfWeek = new Date(now);
+                    startOfWeek.setDate(now.getDate() - now.getDay());
+                    const endOfWeek = new Date(startOfWeek);
+                    endOfWeek.setDate(startOfWeek.getDate() + 6);
+                    
+                    return taskDate >= startOfWeek && taskDate <= endOfWeek;
+                }
+
+                if (dateFilter.value === 'month') {
+                    return taskDate.getMonth() === now.getMonth() && 
+                           taskDate.getFullYear() === now.getFullYear();
+                }
+                return true;
+            });
+        }
+
+        // 5. Search Filter
         if (searchTerm) {
             filteredTasks = filteredTasks.filter(t => 
                 t.title.toLowerCase().includes(searchTerm) || 
@@ -244,7 +329,6 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `).join('');
 
-        // Apply list-level expanded class
         if (expandedTaskId) {
             tasksList.classList.add('has-expanded');
         } else {
@@ -257,6 +341,9 @@ document.addEventListener('DOMContentLoaded', () => {
     [priorityFilter, dateFilter, statusFilter].forEach(f => f.addEventListener('change', renderTasks));
     searchInput.addEventListener('input', renderTasks);
 
+    /**
+     * TASK FORM SUBMISSION
+     */
     taskForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const idInput = document.getElementById('task_id');
@@ -291,7 +378,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dueTime: timeInput.value,
             description: newDesc,
             priority: calculatePriority(dateInput.value),
-            createdAt: currentId ? undefined : new Date().toISOString() // Tracks creation time for sorting
+            createdAt: currentId ? undefined : new Date().toISOString()
         };
 
         if (currentId) {
@@ -304,6 +391,9 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleModal(false);
     });
 
+    /**
+     * TASKS LIST CLICK EVENT LISTENER
+     */
     tasksList.addEventListener('click', (e) => {
         const id = parseInt(e.target.closest('[data-id]')?.dataset.id);
         if (!id) return;
@@ -313,7 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
             saveAndRender();
         } else if (e.target.closest('.delete')) {
             if (confirm("Are you sure you want to delete this task?")) {
-                if (expandedTaskId === id) expandedTaskId = null; // Clear if deleted
+                if (expandedTaskId === id) expandedTaskId = null; 
                 tasks = tasks.filter(t => t.id !== id);
                 saveAndRender();
             }
@@ -333,15 +423,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = e.target.closest('.task_card');
             if (card && !e.target.closest('.task_actions')) {
                 if (e.target.closest('.close_expanded')) {
-                    expandedTaskId = null; // Update persistent ID
+                    expandedTaskId = null; 
                 } else {
-                    expandedTaskId = id; // Update persistent ID
+                    expandedTaskId = id; 
                 }
-                renderTasks(); // Re-render to apply logic
+                renderTasks(); 
             }
         }
     });
 
+    /**
+     * UPDATE STATS FUNCTION
+     */
     const updateStats = () => {
         const today = new Date().setHours(0,0,0,0);
         document.getElementById('total-tasks-count').innerText = tasks.length;
@@ -350,5 +443,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('overdue-tasks-count').innerText = tasks.filter(t => !t.completed && new Date(t.dueDate) < today).length;
     };
 
+    // --- INITIALIZATION ---
+    refreshAllPriorities(); // Update priority based on today's date
     renderTasks();
 });
