@@ -65,6 +65,7 @@ body{
     font-size: 1.6rem;
     line-height: 1.4;
     overflow-x: hidden;
+    overflow-y: auto;
     background-color: var(--bg-color);
     color: var(--text-color);
     -ms-overflow-style: none;  /* IE and Edge */
@@ -91,7 +92,7 @@ img{
 .app_container{
    
 
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -1260,3 +1261,86 @@ input:checked + .slider:before { transform: translateX(18px); }
     color: var(--primary-hover);
     transform: scale(1.2);
 }
+@media (max-width: 768px) {
+  .header_wrapper {
+    width: 100%;
+    padding: 0 1.5rem;
+  }
+  .header_nav {
+    display: none; /* hide on mobile */
+  }
+  .header_nav.active {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background: var(--primary-color);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 2rem;
+  }
+}
+@media (max-width: 992px) {
+  .sidebar_wrapper {
+    width: 20rem;
+    padding: 2rem;
+  }
+}
+@media (max-width: 768px) {
+  .sidebar_wrapper {
+    display: none; /* hide sidebar on mobile */
+  }
+}
+@media (max-width: 480px) {
+  .task_card {
+    height: auto;
+    padding: 1.5rem;
+  }
+  .task_card_header h4 {
+    font-size: 1.6rem;
+  }
+}
+@media (max-width: 768px) {
+  .features_grid, .dev_grid {
+    grid-template-columns: 1fr;
+  }
+  .dev_card {
+    height: auto;
+    padding: 2rem;
+  }
+}
+@media (max-width: 480px) {
+  body {
+    font-size: 1.4rem;
+  }
+  h2, h3 {
+    font-size: 1.8rem;
+  }
+}
+/* Hide nav on mobile, show hamburger */
+@media (max-width: 768px) {
+  .header_nav {
+    display: none;
+    flex-direction: column;
+    gap: 2rem;
+    background: var(--primary-color);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 2rem;
+  }
+
+  .header_nav.active {
+    display: flex; /* show when toggled */
+  }
+
+  .menu_toggle {
+    display: block;
+    font-size: 2.2rem;
+    color: white;
+    cursor: pointer;
+  }
+}
+
