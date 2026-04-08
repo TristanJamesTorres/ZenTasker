@@ -131,6 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    
+
     /**
      * TOGGLE MODAL FUNCTION
      */
@@ -446,4 +448,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- INITIALIZATION ---
     refreshAllPriorities(); // Update priority based on today's date
     renderTasks();
+});
+
+const menuToggle = document.querySelector('.menu_toggle');
+const nav = document.querySelector('.header_nav');
+
+menuToggle.addEventListener('click', (e) => {
+  e.preventDefault(); // stop page reload
+  nav.classList.toggle('active');
 });
